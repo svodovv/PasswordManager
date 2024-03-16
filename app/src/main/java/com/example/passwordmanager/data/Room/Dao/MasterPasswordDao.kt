@@ -1,5 +1,6 @@
 package com.example.passwordmanager.data.Room.Dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -9,7 +10,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MasterPasswordDao {
 
-    @Query("SELECT * FROM MasterPassword")
-    suspend fun getMasterPassword(): MasterPassword?
+    @Query("SELECT * FROM MasterPassword ")
+    fun getMasterPassword(): LiveData<MasterPassword>
+
+    @Insert
+    suspend fun insertPassword(password: MasterPassword)
 
 }

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">PasswordManager</string>
+    <string name="firsLogintext">Введите мастер-пароль</string>
+    <string name="ErrorInPassLenght">Пароль должен быть длиннее 3 символов</string>
+    <string name="PasswordsNonEquals">Пароли не совпадают</string>
+    <string name="SignIn">Войти</string>
+    <string name="PasswordError">Неверный пароль</string>
 </resources>

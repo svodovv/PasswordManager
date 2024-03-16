@@ -10,12 +10,15 @@ fun GetTopBar(
     route: String,
     selectedTitle: String
 ) {
-    if (route == Screen.IconListScreen.route) {
-        /* Пустой @Composable */
+    if (route == Screen.IconListScreen.route ||
+        route == Screen.FirstLoginScreen.route ||
+        route == Screen.LoginScreen.route ||
+        route == Screen.LoadingScreen.route) {
+        //
     } else {
         TopAppBarComposable(
             navController = navController,
             selectedTitle = selectedTitle
-            )
+        )
     }
 }

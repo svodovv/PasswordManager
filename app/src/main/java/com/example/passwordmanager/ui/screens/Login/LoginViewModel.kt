@@ -1,48 +1,65 @@
 package com.example.passwordmanager.ui.screens.Login
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.passwordmanager.data.repositories.repository.PasswordRepositoryImpl
-import com.omgupsapp.common.Resource
+import com.example.passwordmanager.data.repositories.repository.UserAuthenticatedImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val repo: PasswordRepositoryImpl
+    private val repoUserPass: PasswordRepositoryImpl,
+    private val repoUserAuth: UserAuthenticatedImpl
 ) : ViewModel() {
 
     private val _loginState = mutableStateOf(LoginState())
     val loginState: State<LoginState> = _loginState
 
     init {
-        getPassword()
+        viewModelScope.launch {
+            userAuth()
+        }
     }
 
-    private fun getPassword() {
-        viewModelScope.launch {
-            repo.getMasterPassword().onEach { resource ->
-                when (resource) {
-                    is Resource.Success -> {
-                        _loginState.value =
-                            _loginState.value.copy(passBool = resource.data ?: false)
-                    }
+    private fun userAuth() {
+        repoUserAuth.getUserAuth().observeForever {
+            _loginState.value = _loginState.value.copy(passBool = it.userAuthenticated)
 
-                    is Resource.Loading -> {
-                        _loginState.value = _loginState.value.copy(onLoading = true)
-                    }
-
-                    is Resource.Error -> {
-                        _loginState.value =
-                            _loginState.value.copy(onError = resource.message ?: "Ошибка работы БД")
-                    }
-                }
-            }
         }
+
+    }
+
+
+    fun onChangeFirsLogin(firsPass: String) {
+        _loginState.value = _loginState.value.copy(firsPass = firsPass)
+    }
+
+    fun onChangeSecondLogin(secondPass: String) {
+        _loginState.value = _loginState.value.copy(secondPass = secondPass)
+    }
+
+    fun passwordsEquals() {
+        if (loginState.value.firsPass == loginState.value.secondPass) {
+            viewModelScope.launch {
+                repoUserAuth.userSavePass() // Сохраняет значение что пользователь уже имеет парль
+                repoUserPass.insertPassword(loginState.value.firsPass) // Сохраняет пароль
+            }
+            _loginState.value = _loginState.value.copy(passBool = true)
+        }
+    }
+
+    // Проверка на совпадение паролей
+    fun userAuthenticated(password: String) {
+        repoUserPass.userAuthenticated(password).observeForever {
+            _loginState.value = _loginState.value.copy(userAuthenticated = it)
+        }
+    }
+
+    fun changeUserAuth() {
+        _loginState.value = _loginState.value.copy(userAuthenticated = null)
     }
 }
