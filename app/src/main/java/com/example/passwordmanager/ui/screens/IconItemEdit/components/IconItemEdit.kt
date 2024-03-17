@@ -25,7 +25,8 @@ import com.example.passwordmanager.ui.screens.IconItemEdit.IconItemEditViewModel
 
 @Composable
 fun IconItemEdit(
-    name: String, navController: NavController, viewModel: IconItemEditViewModel = hiltViewModel()
+    name: String, navController: NavController,
+    viewModel: IconItemEditViewModel = hiltViewModel()
 ) {
 
 
@@ -85,6 +86,12 @@ fun IconItemEdit(
                 )
             )
             Button(onClick = {
+                viewModel.deleteIcon(viewModel.siteInfo.value.id)
+                navController.navigate(Screen.IconListScreen.route)
+            }, modifier = Modifier.width(200.dp)) {
+                Text(text = "Удалить ")
+            }
+            Button(onClick = {
 
                 viewModel.saveSiteSettings()
 
@@ -92,6 +99,7 @@ fun IconItemEdit(
             }, modifier = Modifier.width(200.dp)) {
                 Text(text = "Сохранить ")
             }
+
         }
     }
 }

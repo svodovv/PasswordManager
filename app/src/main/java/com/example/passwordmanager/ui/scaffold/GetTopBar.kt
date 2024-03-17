@@ -16,7 +16,7 @@ fun GetTopBar(
     } else {
         TopAppBarComposable(
             navController = navController,
-            route = route
+            route = route,
         )
     }
 }

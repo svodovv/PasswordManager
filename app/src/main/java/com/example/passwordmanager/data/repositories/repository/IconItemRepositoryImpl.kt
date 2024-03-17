@@ -1,6 +1,7 @@
 package com.example.passwordmanager.data.repositories.repository
 
 import AESCrypt
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.passwordmanager.data.Room.Model.SiteInfo
@@ -45,5 +46,11 @@ class IconItemRepositoryImpl @Inject constructor(
                password = AESCrypt.encrypt(siteInfo.password),
            )
         )
+    }
+
+    suspend fun deleteIconById(id: Int){
+
+        val deletedRows =db.siteInfoDao().deleteIconById(id)
+        Log.e("DELET", deletedRows.toString())
     }
 }

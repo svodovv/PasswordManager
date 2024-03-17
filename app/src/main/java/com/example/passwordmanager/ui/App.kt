@@ -26,7 +26,7 @@ fun App(
     val navController = rememberNavController()
 
     var siteNameEdit: String? = null
-    ScaffoldComposable(navController = navController) { paddingValues ->
+    ScaffoldComposable(navController = navController ) { paddingValues ->
         NavHost(navController = navController, startDestination = startDestination) {
             composable(route = Screen.LoginScreen.route) {
                 LoginScreen(navController = navController)

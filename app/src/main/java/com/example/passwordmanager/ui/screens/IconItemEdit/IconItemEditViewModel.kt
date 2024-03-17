@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class IconItemEditViewModel @Inject constructor(
-    private val repo: IconItemRepositoryImpl
+    private val repoIconItem: IconItemRepositoryImpl,
 ) : ViewModel() {
 
     private val _siteInfo = mutableStateOf(SiteInfoEditState())
@@ -19,7 +19,7 @@ class IconItemEditViewModel @Inject constructor(
 
     fun getSiteInfo(name: String?) {
         name?.let {
-            repo.getSiteInfo(name).observeForever { siteInfo ->
+            repoIconItem.getSiteInfo(name).observeForever { siteInfo ->
                 siteInfo.let {
                     if (it != null) {
                         _siteInfo.value = _siteInfo.value.copy(
@@ -36,7 +36,7 @@ class IconItemEditViewModel @Inject constructor(
 
     fun saveSiteSettings() {
         viewModelScope.launch {
-            repo.saveSiteSettings(siteInfo.value)
+            repoIconItem.saveSiteSettings(siteInfo.value)
         }
     }
 
@@ -56,6 +56,12 @@ class IconItemEditViewModel @Inject constructor(
         _siteInfo.value = _siteInfo.value.copy(
             name = siteName
         )
+    }
+
+    fun deleteIcon(id: Int) {
+        viewModelScope.launch {
+            repoIconItem.deleteIconById(id)
+        }
     }
 
 }

@@ -3,8 +3,6 @@ package com.omgupsapp.presentation.scaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
@@ -16,7 +14,7 @@ import com.example.passwordmanager.ui.Screen
 @Composable
 fun TopAppBarComposable(
     navController: NavController,
-    route: String
+    route: String,
 ) {
     TopAppBar(
         title = {

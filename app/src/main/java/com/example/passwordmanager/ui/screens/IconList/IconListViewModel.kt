@@ -3,11 +3,8 @@ package com.example.passwordmanager.ui.screens.IconList
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.passwordmanager.data.repositories.model.SiteInfoModel
 import com.example.passwordmanager.data.repositories.repository.IconListRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,10 +26,5 @@ class IconListViewModel @Inject constructor(
     }
 
 
-    fun deleteIcon(siteInfo: SiteInfoModel) {
-        viewModelScope.launch {
-            repo.deleteIconById(siteInfo)
-        }
-    }
 }
 

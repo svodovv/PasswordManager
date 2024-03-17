@@ -33,50 +33,51 @@ fun IconList(
     paddingValues: PaddingValues,
 ) {
     val stateUrlList = iconListViewModel.urlList.value
-    LazyColumn(modifier = Modifier.fillMaxSize().padding(paddingValues)) { // Устанавливаем количество колонок равным 2
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues)
+    ) { // Устанавливаем количество колонок равным 2
         items(stateUrlList.urlList) { siteInfo ->
-            SwipeToDeleteContainer(item = siteInfo.name, onDelete = {
-                iconListViewModel.deleteIcon(siteInfo)
-            }) {
-                Card(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp, top = 8.dp, start = 16.dp, end = 16.dp)
-                    .clickable {
-                        navController.navigate(
-                            Screen.IconItemScreen.route + "/{siteName}".replace(
-                                oldValue = "{siteName}", newValue = siteInfo.name
-                            )
+            Card(modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 8.dp, top = 8.dp, start = 16.dp, end = 16.dp)
+                .clickable {
+                    navController.navigate(
+                        Screen.IconItemScreen.route + "/{siteName}".replace(
+                            oldValue = "{siteName}", newValue = siteInfo.name
                         )
-                    }) {
-                    Row(
-                        modifier = Modifier.padding(bottom = 8.dp, top = 8.dp),
-                        horizontalArrangement = Arrangement.End
+                    )
+                }) {
+                Row(
+                    modifier = Modifier.padding(bottom = 8.dp, top = 8.dp),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .weight(1f)
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .weight(1f)
-                        ) {
-                            AsyncImage(
-                                model = siteInfo.url,
-                                contentDescription = null,
-                                modifier = Modifier.clip(CircleShape),
-                            )
-                        }
-
-                        Text(
-                            text = siteInfo.name,
-                            style = MaterialTheme.typography.headlineSmall,
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .align(Alignment.CenterVertically)
-                                .weight(5f),
-                            textAlign = TextAlign.Center
+                        AsyncImage(
+                            model = siteInfo.url,
+                            contentDescription = null,
+                            modifier = Modifier.clip(CircleShape),
                         )
                     }
+
+                    Text(
+                        text = siteInfo.name,
+                        style = MaterialTheme.typography.headlineSmall,
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .align(Alignment.CenterVertically)
+                            .weight(5f),
+                        textAlign = TextAlign.Center
+                    )
                 }
             }
         }
     }
+
 }
 
