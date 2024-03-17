@@ -13,18 +13,17 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 @Composable
 fun ScaffoldComposable(
     navController: NavHostController,
-    content: @Composable (PaddingValues) -> Unit
+    content: @Composable (PaddingValues) -> Unit,
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val selectedTitle = remember { mutableStateOf("") }
 
-    Scaffold(topBar = {
-        GetTopBar(
-            navController = navController,
-            route = navBackStackEntry?.destination?.route.toString(),
-            selectedTitle = selectedTitle.value
-        )
-    }) { paddingValues ->
+    Scaffold(
+        topBar = {
+            GetTopBar(
+                navController = navController,
+                route = navBackStackEntry?.destination?.route.toString(),
+            )}
+    ) { paddingValues ->
         content(paddingValues)
     }
 }

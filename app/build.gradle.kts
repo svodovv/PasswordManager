@@ -91,8 +91,11 @@ dependencies {
     implementation ("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")
 
     //Nav
-
     implementation ("androidx.navigation:navigation-compose:2.5.3")
+
+    //Biometric
+    implementation ("androidx.biometric:biometric-ktx:1.2.0-alpha05")
+
 }
 
 

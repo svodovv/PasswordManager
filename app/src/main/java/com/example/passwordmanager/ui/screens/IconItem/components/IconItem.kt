@@ -1,5 +1,6 @@
 package com.example.passwordmanager.ui.screens.IconItem.components
 
+import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,10 +22,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.passwordmanager.ui.screens.IconItem.IconItemViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 
 @Composable
 fun IconItem(
-    iconName: String, viewModel: IconItemViewModel = hiltViewModel()
+    iconName: String, viewModel: IconItemViewModel = hiltViewModel(),
 ) {
     viewModel.getSiteInfo(iconName)
 
@@ -51,8 +53,7 @@ fun IconItem(
 
             Text(
                 text = siteInfoState.name, style = MaterialTheme.typography.displayMedium,
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally),
+                modifier = Modifier.align(Alignment.CenterHorizontally),
             )
 
 

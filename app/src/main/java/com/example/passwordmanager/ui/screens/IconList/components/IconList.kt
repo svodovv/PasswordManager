@@ -3,6 +3,7 @@ package com.example.passwordmanager.ui.screens.IconList.components
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,13 +28,15 @@ import com.example.passwordmanager.ui.screens.IconList.IconListViewModel
 
 @Composable
 fun IconList(
-    iconListViewModel: IconListViewModel = hiltViewModel(), navController: NavController
+    iconListViewModel: IconListViewModel = hiltViewModel(),
+    navController: NavController,
+    paddingValues: PaddingValues,
 ) {
     val stateUrlList = iconListViewModel.urlList.value
-    LazyColumn(modifier = Modifier.fillMaxSize()) { // Устанавливаем количество колонок равным 2
+    LazyColumn(modifier = Modifier.fillMaxSize().padding(paddingValues)) { // Устанавливаем количество колонок равным 2
         items(stateUrlList.urlList) { siteInfo ->
             SwipeToDeleteContainer(item = siteInfo.name, onDelete = {
-                iconListViewModel.deleteIcon(siteInfo.name)
+                iconListViewModel.deleteIcon(siteInfo)
             }) {
                 Card(modifier = Modifier
                     .fillMaxWidth()

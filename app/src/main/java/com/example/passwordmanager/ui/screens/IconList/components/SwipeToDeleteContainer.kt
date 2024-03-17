@@ -11,48 +11,52 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SwipeToDismiss
 import androidx.compose.material3.rememberDismissState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SwipeToDeleteContainer(
     item: String,
     onDelete: () -> Unit,
-    animationDuration: Int = 500,
-    content: @Composable RowScope.() -> Unit
+    animationDuration: Int = 1500,
+    content: @Composable RowScope.(String) -> Unit
 ) {
-    var isRemoved by remember {
-        mutableStateOf(false)
-    }
+    val isRemoved = remember { mutableStateOf(false) }
+
     val state = rememberDismissState(confirmValueChange = { value ->
         if (value == DismissValue.DismissedToStart) {
-            isRemoved = true
+            isRemoved.value = true
             true
         } else {
             false
         }
     })
 
+    val isVisible = !isRemoved.value
+
+    LaunchedEffect(isRemoved.value) {
+        if (isRemoved.value) {
+            delay(animationDuration.toLong())
+            onDelete()
+        }
+    }
     AnimatedVisibility(
-        visible = !isRemoved,
+        visible = isVisible,
         exit = shrinkVertically(
-            animationSpec = tween(durationMillis = animationDuration),
+            animationSpec = tween(durationMillis = animationDuration-500),
             shrinkTowards = Alignment.Top
         ) + fadeOut()
     ) {
 
-        if (isRemoved) {
-            onDelete()
-        }
 
-
-        SwipeToDismiss(state = state, background = {
-            DeleteBackground(swipeDismissState = state)
-        }, dismissContent = { content() },
+        SwipeToDismiss(
+            state = state,
+            background = { DeleteBackground(swipeDismissState = state) },
+            dismissContent = { content(item) },
             directions = setOf(DismissDirection.EndToStart)
         )
     }

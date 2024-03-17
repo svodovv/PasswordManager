@@ -8,17 +8,15 @@ import com.example.passwordmanager.ui.Screen
 fun GetTopBar(
     navController: NavController,
     route: String,
-    selectedTitle: String
 ) {
-    if (route == Screen.IconListScreen.route ||
+    if (
         route == Screen.FirstLoginScreen.route ||
-        route == Screen.LoginScreen.route ||
-        route == Screen.LoadingScreen.route) {
+        route == Screen.LoginScreen.route ) {
         //
     } else {
         TopAppBarComposable(
             navController = navController,
-            selectedTitle = selectedTitle
+            route = route
         )
     }
 }

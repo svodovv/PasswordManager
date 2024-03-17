@@ -47,6 +47,7 @@ fun FirsLogin(
     }
 
 
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -113,7 +114,7 @@ fun FirsLogin(
                         .align(Alignment.CenterVertically)
                 )
             }
-            if (userAuth.value == false){
+            if (userAuth.value == false) {
                 Text(
                     text = stringResource(R.string.PasswordsNonEquals),
                     style = MaterialTheme.typography.titleMedium,
@@ -129,7 +130,7 @@ fun FirsLogin(
             onClick = {
                 if (loginState.firsPass.length <= 3 || loginState.secondPass.length <= 3) {
                     passLength.value = true
-                } else  loginViewModel.passwordsEquals()
+                } else loginViewModel.passwordsEquals()
             }, modifier = Modifier
                 .padding(top = 16.dp)
                 .width(200.dp)
@@ -138,7 +139,11 @@ fun FirsLogin(
         }
         LaunchedEffect(Unit) {
             if (loginState.passBool == true) {
-                navController.navigate(Screen.IconListScreen.route)
+                navController.navigate(Screen.IconListScreen.route) {
+                    popUpTo(Screen.IconListScreen.route) {
+                        inclusive = true
+                    }
+                }
             }
         }
     }

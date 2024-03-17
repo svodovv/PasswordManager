@@ -15,13 +15,13 @@ class IconItemViewModel @Inject constructor(
     private val _siteInfo = mutableStateOf(SiteInfoState())
     val siteInfo: State<SiteInfoState> = _siteInfo
 
-    fun getSiteInfo(name: String){
-       repo.getSiteInfo(name).observeForever{
-           _siteInfo.value = _siteInfo.value.copy(
-               url = it.url,
-               name = it.name,
-               password = it.password
-           )
-       }
+    fun getSiteInfo(name: String) {
+        repo.getSiteInfo(name).observeForever { siteInfo ->
+            _siteInfo.value = _siteInfo.value.copy(
+                url = siteInfo.url,
+                name = siteInfo.name,
+                password = siteInfo.password
+            )
+        }
     }
 }

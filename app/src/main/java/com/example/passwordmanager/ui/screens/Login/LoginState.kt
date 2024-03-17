@@ -1,6 +1,5 @@
 package com.example.passwordmanager.ui.screens.Login
 
-import com.example.passwordmanager.data.Room.Model.UserAuthenticated
 
 data class LoginState(
     val firsPass: String = "",
@@ -8,5 +7,7 @@ data class LoginState(
     val passBool: Boolean? = null, // Есть ли пароль
     val onLoading: Boolean = false,
     val onError: String = "",
-    val userAuthenticated: Boolean? = null // Аутентифицирован ли пользователь
+    val userAuthenticated: Boolean? = null, // Аутентифицирован ли пользователь
+    val userBiometricAnnotation: Boolean? = null, //Использовать ли аутентификацию по пальцу
+    val biometricAuthDone: Boolean = false, // Авторизировался ли пользователь по отпечатку пальца
 )
